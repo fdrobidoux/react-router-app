@@ -1,7 +1,7 @@
-const BASE_URL = "http://localhost:8080"
-const JSON_HEADERS = ['Content-Type', 'application/json; charset=utf-8'];
+export const BASE_URL = "http://localhost:8080"
+export const JSON_HEADERS = ['Content-Type', 'application/json; charset=utf-8'];
 
-async function errorHandler(response, defaultMessage, specialCase=null) {
+export async function errorHandler(response, defaultMessage, specialCase=null) {
   if (!response.ok) {
     var message = defaultMessage;
     if (response.headers.get('Content-Type').includes("json")) {

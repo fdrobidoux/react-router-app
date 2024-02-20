@@ -9,10 +9,6 @@ function EventsNavigation() {
           <li>
             <Link 
               to="/events"
-              className={({isActive}) => 
-                isActive ? classes.active : undefined
-              }
-              end
             >
               All Events
             </Link>
@@ -20,9 +16,6 @@ function EventsNavigation() {
           <li>
             <Link 
               to="/events/new" 
-              className={({isActive}) => 
-                isActive ? classes.active : undefined
-              }
             >
               New Event
             </Link>
