@@ -1,30 +1,26 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useSubmit } from "react-router-dom";
 import { useState } from "react";
 
 import { deleteEvent } from '../http';
 import classes from './EventItem.module.css';
 
 function EventItem({ event }) {
-  const [error, setError] = useState();
-  const params = useParams();
-  const navigate = useNavigate();
+  const submit = useSubmit();
+  
   function startDeleteHandler() {
-    deleteEvent(event.id).then(() => {
-      navigate("/events");
-    }).catch(e => {
-      setError(e);
-    });
+    if (window.confirm("Are you sure?")) {
+      submit(null, {method: 'delete'});
+    }
   }
 
   return (
     <article className={classes.event}>
-      {error && <p>{error.message}</p>}
       <img src={event.image} alt={event.title} />
       <h1>{event.title}</h1>
       <time>{event.date}</time>
       <p>{event.description}</p>
       <menu className={classes.actions}>
-        <Link to="./edit" relative="path">Edit</Link>
+        <Link to={"edit"}>Edit</Link>
         <button onClick={startDeleteHandler}>Delete</button>
       </menu>
     </article>

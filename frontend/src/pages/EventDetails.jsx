@@ -1,18 +1,39 @@
-import { useParams } from "react-router-dom";
+import { useRouteLoaderData, json, redirect } from "react-router-dom";
 
 import EventItem from "../components/EventItem";
 import { useFetch } from "../hooks/useFetch";
-import { getEventById } from "../http";
+import { BASE_URL, getEventById } from "../http";
 
 export default function EventDetailPage() {
-  const params = useParams();
-  const { isFetching, error, fetchedData } = useFetch(getEventById, {}, params.eventId);
+  const data = useRouteLoaderData('event-details');
 
   return <>
-    {isFetching && !error && <p>Fetching info...</p>}
-    {!isFetching && error && <p>Error: {error.message}</p>}
-    {!isFetching && !error && (
-      <EventItem event={fetchedData} />
-    )}
+    <EventItem event={data.event} />
   </>;
+}
+
+export async function loader({request, params}) {
+  const response = await fetch(`${BASE_URL}/events/${params.eventId}`);
+
+  if (!response.ok) {
+    throw json({message: "Could not fetch details"}, {
+      status: 500
+    });
+  }
+
+  return response;
+}
+
+export async function action({ request, params }) {
+  const response = await fetch(`${BASE_URL}/events/${params.eventId}`, {
+    method: request.method
+  });
+
+  if (!response.ok) {
+    throw json({message: "Could not delete event."}, {
+      status: 500
+    });
+  }
+
+  return redirect('/events');
 }
