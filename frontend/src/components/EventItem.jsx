@@ -1,7 +1,5 @@
-import { useParams, useNavigate, Link, useSubmit } from "react-router-dom";
-import { useState } from "react";
+import { Link, useSubmit } from "react-router-dom";
 
-import { deleteEvent } from '../http';
 import classes from './EventItem.module.css';
 
 function EventItem({ event }) {

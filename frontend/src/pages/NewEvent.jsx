@@ -1,7 +1,4 @@
-import { useState } from "react";
-import { useNavigate, json, redirect } from "react-router-dom";
 import EventForm from "../components/EventForm";
-import { BASE_URL, createEvent } from "../http";
 
 export default function NewEventPage() {
   return <>

@@ -9,6 +9,8 @@ import EventDetailPage, {loader as eventDetailLoader, action as deleteEventActio
 import NewEventPage from "./pages/NewEvent";
 import EditEventPage from "./pages/EditEvent";
 import ErrorPage from "./pages/Error";
+import NewsletterPage, {action as newsletterAction} from "./pages/Newsletter";
+
 import {action as eventFormAction} from "./components/EventForm";
 
 export const Router = createBrowserRouter([
@@ -18,27 +20,36 @@ export const Router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'events', element: <EventsRoot />, children: [
-        { 
-          index: true, 
-          element: <EventsPage />, 
-          loader: eventsLoader
-        },
-        { path: 'new', element: <NewEventPage />, action: eventFormAction },
-        { 
-          path: ':eventId',
-          id: "event-details",
-          loader: eventDetailLoader,
-          children: [
-            { 
-              index: true, 
-              element: <EventDetailPage />,
-              action: deleteEventAction,
-            },
-            { path: 'edit', element: <EditEventPage />, action: eventFormAction }
-          ]
-        },
-      ]}
+      { 
+        path: 'events', 
+        element: <EventsRoot />, 
+        children: [
+          { 
+            index: true, 
+            element: <EventsPage />, 
+            loader: eventsLoader
+          },
+          { path: 'new', element: <NewEventPage />, action: eventFormAction },
+          { 
+            path: ':eventId',
+            id: "event-details",
+            loader: eventDetailLoader,
+            children: [
+              { 
+                index: true, 
+                element: <EventDetailPage />,
+                action: deleteEventAction,
+              },
+              { path: 'edit', element: <EditEventPage />, action: eventFormAction }
+            ]
+          },
+        ]
+      },
+      {
+        path: "newsletter",
+        element: <NewsletterPage />,
+        action: newsletterAction
+      }
     ]
   }
 ])
